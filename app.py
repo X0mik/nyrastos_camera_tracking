@@ -1,6 +1,11 @@
 import cv2
 import mediapipe as mp
 from mediapipe.tasks.python import vision
+import socket
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+address = '127.0.0.1',5066
+data = b'test'
 
 landmarker = vision.HandLandmarker.create_from_model_path("hand_landmarker.task")
 
@@ -13,6 +18,7 @@ CONNECTIONS = [(0,1),(1,2),(2,3),(3,4),        # thumb
 cap = cv2.VideoCapture(0)
 
 while True:
+    sock.sendto(data, address)
     ok, frame = cap.read()
     h, w = frame.shape[:2]
 
